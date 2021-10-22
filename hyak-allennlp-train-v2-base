@@ -1,0 +1,38 @@
+#!/bin/bash
+
+source /path/to/miniconda3/etc/profile.d/conda.sh
+source ~/.bashrc
+conda activate lr-ssmba-multitask
+
+# set -euo pipefail
+
+cat $0
+echo "-----------------------"
+
+export MTL_BERT_OUTPUTS="/path/to/bert_outputs"
+export MTL_DATA="/path/to/data"
+export MTL_ALLENNLP_OUTPUTS="/path/to/allennlp_outputs"
+export REPO_DIR="./specializing_multilingual"
+
+cd $REPO_DIR
+
+readonly output_dir="$MTL_ALLENNLP_OUTPUTS"
+
+mkdir -p $output_dir
+
+ARGS=( "$@" )
+COMMANDS="${ARGS[@]}"
+
+for i in $COMMANDS; do
+    for s in $(seq 0 4); do
+        export SEED_SET="$s"
+        echo $i $s
+        touch $output_dir/${i}.${SEED_SET}/THIS_IS_RUNNING.txt
+        allennlp train config/autogen/${i}.jsonnet \
+            -s $output_dir/${i}.${SEED_SET} --include-package modules-v2 \
+            && touch $output_dir/${i}.${SEED_SET}/THIS_IS_GOOD.txt \
+            || touch $output_dir/${i}.${SEED_SET}/THIS_IS_BAD.txt
+        rm -f $output_dir/${i}.${SEED_SET}/THIS_IS_RUNNING.txt
+    done
+done
+ 

@@ -1,0 +1,313 @@
+#!/bin/bash
+
+set -euo pipefail
+
+for lang in be bg ga mhr mt ug ur vi wo mhrlatin uglatin uglatinnfkc; do
+    # fasttext
+    config_name="../autogen/mtlner_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_ner(\"${lang}\", \"fasttext\", [])" >> $config_name
+
+    config_name="../autogen/mtlud_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_ud(\"${lang}\", \"fasttext\", [])" >> $config_name
+
+    config_name="../autogen/mtlpos_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_pos(\"${lang}\", \"fasttext\", [])" >> $config_name
+
+    config_name="../autogen/mtl_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl(\"${lang}\", \"fasttext\", [], false)" >> $config_name
+
+    config_name="../autogen/mtlalt_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_alt(\"${lang}\", \"fasttext\", [], false)" >> $config_name
+
+    config_name="../autogen/mtlhom_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl(\"${lang}\", \"fasttext\", [], true)" >> $config_name
+
+    config_name="../autogen/mtlalthom_${lang}_fasttext.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_alt(\"${lang}\", \"fasttext\", [], true)" >> $config_name
+
+    for base_config in mtl mtlalt mtlhom mtlalthom; do
+        for task in ud ner pos; do
+            config_name="../autogen/ms${task}_${base_config}_${lang}_fasttext.jsonnet"
+            echo $config_name
+            echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+                > $config_name
+            echo "" >> $config_name
+            echo "t.build_mtl_${task}_ms(\"${lang}\", \"fasttext\", [], \"${base_config}_${lang}_fasttext\")" >> $config_name
+        done
+    done
+
+
+    # mBERT 
+    config_name="../autogen/mtlner_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_ner(\"${lang}\", \"bert\", [\"mbert\"])" >> $config_name
+
+    config_name="../autogen/mtlud_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_ud(\"${lang}\", \"bert\", [\"mbert\"])" >> $config_name
+
+    config_name="../autogen/mtlpos_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_pos(\"${lang}\", \"bert\", [\"mbert\"])" >> $config_name
+
+    config_name="../autogen/mtl_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl(\"${lang}\", \"bert\", [\"mbert\"], false)" >> $config_name
+
+    config_name="../autogen/mtlalt_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"mbert\"], false)" >> $config_name
+
+    config_name="../autogen/mtlhom_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl(\"${lang}\", \"bert\", [\"mbert\"], true)" >> $config_name
+
+    config_name="../autogen/mtlalthom_${lang}_mbert.jsonnet"
+    echo $config_name
+    echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+        > $config_name
+    echo "" >> $config_name
+    echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"mbert\"], true)" >> $config_name
+
+    for base_config in mtl mtlalt mtlhom mtlalthom; do
+        for task in ud ner pos; do
+            config_name="../autogen/ms${task}_${base_config}_${lang}_mbert.jsonnet"
+            echo $config_name
+            echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+                > $config_name
+            echo "" >> $config_name
+            echo "t.build_mtl_${task}_ms(\"${lang}\", \"bert\", [\"mbert\"], \"${base_config}_${lang}_mbert\")" >> $config_name
+        done
+    done
+
+    for epoch in best; do
+        # TVA-mBERT 
+        config_name="../autogen/mtlner_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_ner(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtlud_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_ud(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtlpos_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_pos(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtl_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"], false)" >> $config_name
+
+        config_name="../autogen/mtlalt_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"], false)" >> $config_name
+
+        config_name="../autogen/mtlhom_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"], true)" >> $config_name
+
+        config_name="../autogen/mtlalthom_${lang}_tva_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"], true)" >> $config_name
+
+        for base_config in mtl mtlalt mtlhom mtlalthom; do
+            for task in ud ner pos; do
+                config_name="../autogen/ms${task}_${base_config}_${lang}_tva_${epoch}.jsonnet"
+                echo $config_name
+                echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+                    > $config_name
+                echo "" >> $config_name
+                echo "t.build_mtl_${task}_ms(\"${lang}\", \"bert\", [\"vambert\", \"${epoch}\"], \"${base_config}_${lang}_tva_${epoch}\")" >> $config_name
+            done
+        done
+        
+        # LAPT-mBERT
+        config_name="../autogen/mtlner_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_ner(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtlud_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_ud(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtlpos_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_pos(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtl_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"], false)" >> $config_name
+
+        config_name="../autogen/mtlalt_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"], false)" >> $config_name
+
+        config_name="../autogen/mtlhom_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"], true)" >> $config_name
+
+        config_name="../autogen/mtlalthom_${lang}_lapt_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"], true)" >> $config_name
+
+        for base_config in mtl mtlalt mtlhom mtlalthom; do
+            for task in ud ner pos; do
+                config_name="../autogen/ms${task}_${base_config}_${lang}_lapt_${epoch}.jsonnet"
+                echo $config_name
+                echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+                    > $config_name
+                echo "" >> $config_name
+                echo "t.build_mtl_${task}_ms(\"${lang}\", \"bert\", [\"lapt\", \"${epoch}\"], \"${base_config}_${lang}_lapt_${epoch}\")" >> $config_name
+            done
+        done
+
+        # RoBERTa 
+        config_name="../autogen/mtlner_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_ner(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtlud_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_ud(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtlpos_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_pos(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"])" >> $config_name
+
+        config_name="../autogen/mtl_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"], false)" >> $config_name
+
+        config_name="../autogen/mtlalt_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"], false)" >> $config_name
+
+        config_name="../autogen/mtlhom_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"], true)" >> $config_name
+
+        config_name="../autogen/mtlalthom_${lang}_roberta_${epoch}.jsonnet"
+        echo $config_name
+        echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+            > $config_name
+        echo "" >> $config_name
+        echo "t.build_mtl_alt(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"], true)" >> $config_name
+
+        for base_config in mtl mtlalt mtlhom mtlalthom; do
+            for task in ud ner pos; do
+                config_name="../autogen/ms${task}_${base_config}_${lang}_roberta_${epoch}.jsonnet"
+                echo $config_name
+                echo "local t = import \"DO_NOT_ERASE_pathfinder.libsonnet\";"  \
+                    > $config_name
+                echo "" >> $config_name
+                echo "t.build_mtl_${task}_ms(\"${lang}\", \"bert\", [\"roberta\", \"${epoch}\"], \"${base_config}_${lang}_roberta_${epoch}\")" >> $config_name
+            done
+        done
+    done
+done
