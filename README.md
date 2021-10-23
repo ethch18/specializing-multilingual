@@ -5,7 +5,7 @@ Language Models: An Empirical Study" by Ethan C. Chau and Noah A. Smith,
 appearing in the Workshop for Multilingual Representation Learning (MRL) 2021.
 
 Data can be found in a [separate
-repository](https://github.com/ethch18/specializing-multilingual-data); this is
+repository](https://gitlab.com/echau18/specializing-multilingual-data); this is
 done for Git optimization.
 
 Further details are forthcoming.
