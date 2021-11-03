@@ -43,7 +43,7 @@ cd scripts/eval
 python eval_mlm.py --eval-file $VALID_TXT --model-dir $MODEL_DIR [--is-roberta]
 ```
 
-### ...convert a trained LAPT/TVA model to an PyTorch?
+### ...convert a trained LAPT/TVA model to PyTorch?
 See `scripts/modeling/convert_bert_to_hf.py`, which may incur additional
 dependencies depending on your system configuration.
 
