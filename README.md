@@ -76,13 +76,16 @@ First, generate a vocabulary report for all the languages in question using
 ## Citation
 Please cite our work if you have found it helpful!
 ```
-@misc{chau2021specializing,
-      title={Specializing Multilingual Language Models: An Empirical Study}, 
-      author={Ethan C. Chau and Noah A. Smith},
-      year={2021},
-      eprint={2106.09063},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{chau-smith-2021-specializing,
+    title = "Specializing Multilingual Language Models: An Empirical Study",
+    author = "Chau, Ethan C.  and
+      Smith, Noah A.",
+    booktitle = "Proceedings of the 1st Workshop on Multilingual Representation Learning",
+    month = nov,
+    year = "2021",
+    address = "Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.mrl-1.5",
 }
 ```
 
