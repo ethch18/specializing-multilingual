@@ -1,7 +1,8 @@
 # Specializing Multilingual Language Models: An Empirical Study
 
-This repo contains code for the paper "Specializing Multilingual
-Language Models: An Empirical Study" by Ethan C. Chau and Noah A. Smith,
+This repo contains code for the paper ["Specializing Multilingual
+Language Models: An Empirical Study"](https://aclanthology.org/2021.mrl-1.5)
+by Ethan C. Chau and Noah A. Smith,
 appearing in the Workshop for Multilingual Representation Learning (MRL) 2021.
 
 Data can be found in a [separate
@@ -22,6 +23,9 @@ references the [original BERT repository](https://github.com/google-research/ber
 
 Vocabularies and pre-sharded data for LAPT/TVA for each of the languages used in
 this paper can be found in the data repository.
+
+**Update (6/14/2022)** following the update to `parsing-mbert`, please check out
+the `pre_revision` commit of that repository.
 
 ### ...train a monolingual RoBERTa baseline?
 First, train a vocabulary from your data.
